@@ -64,7 +64,7 @@ def load_artifacts():
         test2 = joblib.load("models/results.pkl")
     except Exception:
         st.info("🔄 First-time setup: Training models... (2-3 mins)")
-        subprocess.run(["python", "train_modeltel.py"], check=True)
+        subprocess.run([sys.executable, "train_modeltel.py"], check=True)
 
     return {
         "scaler": joblib.load("models/scaler.pkl"),
