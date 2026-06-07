@@ -2,6 +2,9 @@
 app.py  —  Telco Customer Churn Predictor  |  5-Model Streamlit Dashboard
 Run:  streamlit run app.py
 """
+import sys
+import subprocess
+import streamlit as st
 
 import streamlit as st
 import pandas as pd
