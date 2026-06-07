@@ -57,23 +57,31 @@ st.markdown("""
 # ─────────────────────────────────────────────────────────────────────────────
 @st.cache_resource
 def load_artifacts():
+    import os, subprocess
+    # Auto-retrain if models missing or incompatible
+    try:
+        test = joblib.load("models/scaler.pkl")
+        test2 = joblib.load("models/results.pkl")
+    except Exception:
+        st.info("🔄 First-time setup: Training models... (2-3 mins)")
+        subprocess.run(["python", "train_modeltel.py"], check=True)
+
     return {
-        "scaler":       joblib.load("models/scaler.pkl"),
-        "imputer":      joblib.load("models/imputer.pkl"),
-        "encoders":     joblib.load("models/encoders.pkl"),
-        "best_model":   joblib.load("models/best_model.pkl"),
-        "feature_names":joblib.load("models/feature_names.pkl"),
-        "results":      joblib.load("models/results.pkl"),
-        "fi":           joblib.load("models/feature_importance.pkl"),
-        "best_name":    joblib.load("models/best_model_name.pkl"),
-        "model_fi":     joblib.load("models/model_feature_importance.pkl"),
-        # individual model pkls
+        "scaler": joblib.load("models/scaler.pkl"),
+        "imputer": joblib.load("models/imputer.pkl"),
+        "encoders": joblib.load("models/encoders.pkl"),
+        "best_model": joblib.load("models/best_model.pkl"),
+        "feature_names": joblib.load("models/feature_names.pkl"),
+        "results": joblib.load("models/results.pkl"),
+        "fi": joblib.load("models/feature_importance.pkl"),
+        "best_name": joblib.load("models/best_model_name.pkl"),
+        "model_fi": joblib.load("models/model_feature_importance.pkl"),
         "models": {
-            "XGBoost":              joblib.load("models/model_xgboost.pkl"),
-            "Random Forest":        joblib.load("models/model_random_forest.pkl"),
-            "Gradient Boosting":    joblib.load("models/model_gradient_boosting.pkl"),
-            "Logistic Regression":  joblib.load("models/model_logistic_regression.pkl"),
-            "SVM (RBF)":            joblib.load("models/model_svm_rbf.pkl"),
+            "XGBoost": joblib.load("models/model_xgboost.pkl"),
+            "Random Forest": joblib.load("models/model_random_forest.pkl"),
+            "Gradient Boosting": joblib.load("models/model_gradient_boosting.pkl"),
+            "Logistic Regression": joblib.load("models/model_logistic_regression.pkl"),
+            "SVM (RBF)": joblib.load("models/model_svm_rbf.pkl"),
         }
     }
 
